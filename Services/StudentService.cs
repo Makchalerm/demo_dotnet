@@ -18,6 +18,17 @@ namespace MyApiProject.Services
         {
             return await _context.Students.ToListAsync();
         }
+        public async Task<Student?> GetByIdAsync(int id)
+        {
+            return await _context.Students.FindAsync(id);
+        }
+        public async Task<bool> ExistsByFullNameAsync(string firstName, string lastName)
+        {
+            return await _context.Students.AnyAsync(s =>
+                s.FirstName.ToLower() == firstName.ToLower() &&
+                s.LastName.ToLower() == lastName.ToLower()
+            );
+        }
         public async Task<Student?> CreateAsync(Student student)
         {
             _context.Students.Add(student);
