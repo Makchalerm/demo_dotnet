@@ -13,5 +13,7 @@ namespace MyApiProject.Services
         Task<Student?> DeleteAsync(int id);
         Task<List<Student?>> DeleteAllAsync();
         Task<bool> ExistsByFullNameAsync(string firstName, string lastName);
+        Task<List<Student>> SearchAsync(string? firstName, string? lastName, string? major);
+
     }
 }
