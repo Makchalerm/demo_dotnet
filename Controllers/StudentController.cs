@@ -91,6 +91,43 @@ namespace MyApiProject.Controllers
                 });
             }
         }
+        // GET api/std/search?firstName=...&lastName=...&major=...
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] string? firstName, [FromQuery] string? lastName, [FromQuery] string? major)
+        {
+            try
+            {
+                var results = await _service.SearchAsync(firstName, lastName, major);
+
+                if (results == null || !results.Any())
+                {
+                    return NotFound(new
+                    {
+                        status = 404,
+                        message = "❌ No students found matching the criteria.",
+                        data = new List<Student>()
+                    });
+                }
+
+                return Ok(new
+                {
+                    status = 200,
+                    message = $"✅ Found {results.Count} student(s).",
+                    data = results
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    status = 500,
+                    message = "❌ Search failed due to unexpected error.",
+                    detail = ex.Message
+                });
+            }
+        }
+
+
         // POST api/std http://localhost:5175/api/std
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Student student)

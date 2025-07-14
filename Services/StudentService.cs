@@ -29,6 +29,22 @@ namespace MyApiProject.Services
                 s.LastName.ToLower() == lastName.ToLower()
             );
         }
+        public async Task<List<Student>> SearchAsync(string? firstName, string? lastName, string? major)
+        {
+            var query = _context.Students.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(firstName))
+                query = query.Where(s => s.FirstName.Contains(firstName));
+
+            if (!string.IsNullOrWhiteSpace(lastName))
+                query = query.Where(s => s.LastName.Contains(lastName));
+
+            if (!string.IsNullOrWhiteSpace(major))
+                query = query.Where(s => s.Major.Contains(major));
+
+            return await query.ToListAsync();
+        }
+
         public async Task<Student?> CreateAsync(Student student)
         {
             _context.Students.Add(student);

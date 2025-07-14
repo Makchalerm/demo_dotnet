@@ -4,30 +4,33 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyApiProject.Models
 {
-    [Table("student")]
-    public class Student
+    public class StudentRequest
     {
-        [Key]
         [Column("student_id")]
         public int StudentId { get; set; }
 
         [Column("first_name")]
-        public string FirstName { get; set; }
+        [StringLength(50)]
+        public string? FirstName { get; set; }
 
         [Column("last_name")]
-        public string LastName { get; set; }
+        [StringLength(50)]
+        public string? LastName { get; set; }
 
         [Column("date_of_birth")]
         public DateTime DateOfBirth { get; set; }
 
         [Column("major")]
-        public string Major { get; set; }
+        [StringLength(100)]
+        public string? Major { get; set; }
 
         [Column("username")]
-        public string Username { get; set; }
+        [StringLength(50)]
+        public string? Username { get; set; }
 
         [Column("password")]
-        public string Password { get; set; }
+        [StringLength(255)]
+        public string? Password { get; set; }
     }
 }
 
